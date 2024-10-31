@@ -1,33 +1,33 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  constructor(private router:Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
-  isLoggedIn(){
-    return true;
+  isLoggedIn() {
+    return this.userService.isLoggedIn();
   }
 
-  home(){
+  home() {
     this.router.navigate(['']);
   }
 
-  login(){
+  login() {
     this.router.navigate(['/auth/login']);
   }
 
-  logout(){
-    //this.service.logOut()
-    this.router.navigate(['']);
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['/auth/login']);
   }
 
-  register(){
+  register() {
     this.router.navigate(['/auth/register']);
   }
-  
 }

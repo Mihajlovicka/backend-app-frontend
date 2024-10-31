@@ -1,1 +1,44 @@
-<p>login works!</p>
+<div class="centered-container">
+  <mat-card class="main-card">
+    <mat-card-title class="centered-header">Login</mat-card-title>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-card-content>
+        <div class="form-container">
+          <div class="form-column">
+            <mat-form-field appearance="fill" class="compact-field">
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="username" />
+              <mat-error
+                *ngIf="f['username'].invalid && f['username']?.touched"
+              >
+                Username is mandatory
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="compact-field">
+              <mat-label>Password</mat-label>
+              <input type="password" matInput formControlName="password" />
+              <mat-error
+                *ngIf="f['password'].invalid && f['password']?.touched"
+              >
+                Password is mandatory
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <div class="registration-link">
+        <p>
+          Don't have an account?
+          <a routerLink="/auth/register">Register here</a>
+        </p>
+      </div>
+
+      <mat-card-actions class="button-container">
+        <button color="primary" mat-raised-button type="submit">Login</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

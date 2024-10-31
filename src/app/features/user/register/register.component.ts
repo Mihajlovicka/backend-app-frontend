@@ -4,33 +4,67 @@ import { UserService } from 'src/app/core/services/user.service';
 import { UserRole } from 'src/app/core/model/user-role';
 import { Router } from '@angular/router';
 import { ServiceResponse } from 'src/app/core/model/service-response';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  user:RegistrationRequestDto = new RegistrationRequestDto();
+  registerForm: FormGroup;
   roles: string[] = Object.values(UserRole);
+  currentStep = 1;
 
-  constructor(private readonly service: UserService,
-              private readonly router: Router
-  ){}
+  constructor(
+    private readonly service: UserService,
+    private readonly router: Router,
+    private fb: FormBuilder
+  ) {
+    this.registerForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      role: [UserRole.GUEST, Validators.required],
+      password: ['', Validators.required],
+      address: this.fb.group({
+        streetNumber: ['', Validators.required],
+        streetName: ['', Validators.required],
+        city: ['', Validators.required],
+        postNumber: [''],
+        country: [''],
+      }),
+    });
+  }
 
-  onSubmit(){
-    console.log(this.user);
-    this.service.register(this.user).subscribe(
-      {
-        next: (res) => {
-          alert("Registracija uspesna!");
-          this.router.navigate(["/auth/login"]);
-        },
-        error: (err:ServiceResponse) => {
-          alert(err.message);
-          console.error('An error occurred:', err);
-        }
-      }
-    )
+  onSubmit() {
+    if (this.registerForm.invalid) return;
+
+    this.service.register(this.registerForm.value).subscribe({
+      next: () => {
+        this.router.navigate(['/auth/login']);
+      },
+    });
+  }
+
+  get f() {
+    return this.registerForm.controls;
+  }
+
+  get addressControls() {
+    return (this.registerForm.get('address') as FormGroup)?.controls;
+  }
+
+  goToNextStep() {
+    if (
+      this.registerForm.get('firstName')?.valid &&
+      this.registerForm.get('lastName')?.valid
+    ) {
+      this.currentStep = 2;
+    }
+  }
+
+  goToPreviousStep() {
+    this.currentStep = 1;
   }
 }

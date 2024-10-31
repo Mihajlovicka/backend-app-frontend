@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { HomePageComponent } from './home-page/home-page.component';
 import { HeaderComponent } from './header/header.component';
 import { CoreModule } from '../core/core.module';
+import { PopupComponent } from './popup/popup.component';
 
 
 
 @NgModule({
   declarations: [
     HomePageComponent,
-    HeaderComponent
+    HeaderComponent,
+    PopupComponent
   ],
   imports: [
     CommonModule,

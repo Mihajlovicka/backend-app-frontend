@@ -1,15 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './shared/home-page/home-page.component';
+import { authGuard } from './core/auth.guard';
+import { UserRole } from './core/model/user-role';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
-  { path: 'auth', loadChildren: () => import('./features/user/user.module').then(m => m.UserModule) },
-  { path: '**', redirectTo: '' }
+  {
+    path: '',
+    component: HomePageComponent,
+    canActivate: [authGuard],
+    data: { requiredRole: [UserRole.GUEST, UserRole.HOST] },
+  },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/user/user.module').then((m) => m.UserModule),
+  },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
