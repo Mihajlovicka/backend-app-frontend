@@ -1,16 +1,34 @@
 <mat-toolbar color="primary" class="transparent-toolbar">
-    <span style="font-family: Garamond, serif; font-size:24px; " (click)="home()">Booking</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button style="font-size: 14px; width: 100px;" routerLink="">Link</button>
+  <span style="font-family: Garamond, serif; font-size: 24px" (click)="home()"
+    >Booking</span
+  >
+  <span class="example-spacer"></span>
+  <button
+    mat-icon-button
+    style="font-size: 14px; width: 100px"
+    (click)="login()"
+    *ngIf="!isLoggedIn()"
+  >
+    Login
+  </button>
+  <button
+    mat-icon-button
+    style="font-size: 14px; width: 100px"
+    (click)="register()"
+    *ngIf="!isLoggedIn()"
+  >
+    Register
+  </button>
 
-    <button mat-icon-button [matMenuTriggerFor]="menu" style="margin-left: 20px">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="login()" *ngIf="isLoggedIn()">Prijava</button>
-      <button mat-menu-item (click)="register()" *ngIf="isLoggedIn()">Registracija</button>
-      
-      <button mat-menu-item (click)="logout()" *ngIf="isLoggedIn()">Odjava</button>
-    </mat-menu>
-  </mat-toolbar>
-  
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    style="margin-left: 20px"
+    *ngIf="isLoggedIn()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">LogOut</button>
+  </mat-menu>
+</mat-toolbar>

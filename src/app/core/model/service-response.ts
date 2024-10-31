@@ -1,5 +1,5 @@
 export interface ServiceResponse{
-    message: string;
-    response: any;
-    
+    errorMessage: string;
+    result: any;
+    success:boolean;
 }

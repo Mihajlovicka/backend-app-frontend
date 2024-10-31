@@ -1,0 +1,78 @@
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Garamond, serif;
+}
+
+.main-card {
+  max-width: 400px; /* Limit the card width */
+  width: 100%;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid white;
+  font-family: Garamond, serif; /* Font for the entire card */
+}
+
+.centered-header {
+  text-align: center;
+  font-size: 1.8rem; /* Increase font size for title */
+  margin-bottom: 1rem; /* Space below the title */
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column; /* Stack fields vertically */
+  gap: 1rem; /* Space between form fields */
+}
+
+.form-column {
+  flex: 1;
+}
+
+.compact-field {
+  width: 100%; /* Ensure fields take full width */
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Align the login button to the right */
+  margin-top: 1rem; /* Space above the button */
+}
+
+.registration-link {
+  text-align: center; /* Center the registration link */
+  margin-top: 1rem; /* Space above the link */
+}
+
+/* Additional styles for error messages */
+mat-error {
+  font-size: 0.875rem; /* Size of error messages */
+  color: red; /* Color for error messages */
+}
+
+mat-card-title {
+  font-weight: bold;
+}
+
+mat-card-title,
+mat-form-field,
+input,
+textarea,
+mat-label,
+mat-error {
+  font-family: Garamond, serif;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 480px) {
+  .main-card {
+    max-width: 90%; /* Allow card to be wider on smaller screens */
+  }
+
+  .centered-header {
+    font-size: 1.25rem; /* Slightly smaller title on mobile */
+  }
+}
