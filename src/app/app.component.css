@@ -1,7 +1,14 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1;
+  flex: 0 0 auto; /* Ensure header doesn't shrink or grow */
+}
+
+.router-outlet {
+  flex: 1 1 auto; /* Allow router-outlet to grow and fill remaining space */
+  overflow-y: auto; /* Enable scrolling if content overflows */
 }
