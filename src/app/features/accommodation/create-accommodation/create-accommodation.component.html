@@ -1,0 +1,168 @@
+<div class="centered-container">
+  <mat-card class="main-card">
+    <mat-card-header class="centered-header">
+      <mat-card-title class="title">Create Accommodation</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="accommodationForm">
+        <div *ngIf="currentStep === 1" class="form-container fixed-dimensions">
+          <h3>Accommodation Details</h3>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="compact-field">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" />
+                <mat-error *ngIf="f['name'].invalid && f['name'].touched">
+                  Name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="compact-field">
+                <mat-label>Description</mat-label>
+                <input matInput formControlName="description" />
+                <mat-error *ngIf="f['description'].invalid && f['description'].touched">
+                  Description is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="compact-field">
+                <mat-label>Min Guests</mat-label>
+                <input matInput type="number" formControlName="minNumberOfGuests" />
+                <mat-error *ngIf="f['minNumberOfGuests'].invalid && f['minNumberOfGuests'].touched">
+                  Min guests must be a positive number
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="compact-field">
+                <mat-label>Max Guests</mat-label>
+                <input matInput type="number" formControlName="maxNumberOfGuests" />
+                <mat-error *ngIf="f['maxNumberOfGuests'].invalid && f['maxNumberOfGuests'].touched">
+                  Max guests must be a positive number
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field class="compact-field">
+                <mat-label *ngIf="items.length > 0">Choose equipment</mat-label>
+                <mat-label *ngIf="items.length === 0">Cannot choose equipment</mat-label>
+                <mat-select multiple formControlName="equipment">
+                  <mat-option *ngFor="let option of items" [value]="option">
+                    {{ option.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="currentStep === 2" class="form-container fixed-dimensions">
+          <h3>Address Details</h3>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="compact-field">
+                <mat-label>Street Number</mat-label>
+                <input matInput formControlName="streetNumber" />
+                <mat-error *ngIf="f['streetNumber'].invalid && f['streetNumber'].touched">
+                  Street Number is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="compact-field">
+                <mat-label>Street Name</mat-label>
+                <input matInput formControlName="streetName" />
+                <mat-error *ngIf="f['streetName'].invalid && f['streetName'].touched">
+                  Street Name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="compact-field">
+                <mat-label>City</mat-label>
+                <input matInput formControlName="city" />
+                <mat-error *ngIf="f['city'].invalid && f['city'].touched">
+                  City is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="compact-field">
+                <mat-label>Post Number</mat-label>
+                <input matInput formControlName="postNumber" />
+                <mat-error *ngIf="f['postNumber'].invalid && f['postNumber'].touched">
+                  Post Number is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field class="compact-field">
+                <mat-label>Country</mat-label>
+                <input matInput formControlName="country"/>
+                <mat-error *ngIf="f['country'].invalid && f['country'].touched">
+                  Country is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="currentStep === 3" class="form-container fixed-dimensions">
+          <div>
+            <h3>Upload Pictures</h3>
+
+            <div class="upload-button-container">
+              <input type="file" id="file-upload" accept="image/*" (change)="onFileSelected($event)" hidden />
+              <label for="file-upload" class="upload-label">
+                <mat-icon class="cloud-upload">cloud_upload</mat-icon>
+              </label>
+            </div>
+          </div>
+
+          <!-- Image Carousel Below -->
+          <div *ngIf="previewUrls.length > 0" class="carousel-container">
+            <button *ngIf="currentImageIndex > 0" (click)="prevImage()" class="carousel-button prev-button-carousel">
+              <mat-icon>arrow_back</mat-icon>
+            </button>
+
+            <div class="carousel-images">
+              <div class="image-container">
+                <img [src]="previewUrls[currentImageIndex]" alt="Image Preview" class="preview-img" />
+                <button class="delete-image-btn" (click)="deleteImage(currentImageIndex)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <button *ngIf="currentImageIndex < previewUrls.length - 1" (click)="nextImage()" class="carousel-button next-button-carousel">
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="previewUrls.length === 0" class="carousel-container-no-images">
+            <h4>No images uploded</h4>
+          </div>
+        </div>
+
+        <mat-card-actions class="step-buttons">
+          <button mat-raised-button color="accent" *ngIf="currentStep > 1" (click)="prevStep()" type="button" class="prev-button">
+            Previous
+          </button>
+          <button mat-raised-button color="primary" *ngIf="currentStep <= 2" (click)="nextStep()" type="button" class="next-button">
+            Next
+          </button>
+          <button mat-raised-button color="primary" *ngIf="currentStep === 3" (click)="onSubmit()" type="submit">
+            Save
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

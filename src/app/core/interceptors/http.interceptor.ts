@@ -27,7 +27,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
           this.popupHandler.openSnackbar('Success!', 'success');
-          return event.clone({ body: event.body.result });
+          return event.clone({ body: event.body?.result });
         }
         return event;
       }),
