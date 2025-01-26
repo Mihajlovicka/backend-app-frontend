@@ -47,7 +47,6 @@ jobs:
         with:
           context: .
           file: Dockerfile
-          target: final
           cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:${{env.SERVICE_NAME}}-buildcache
           cache-to: type=registry,ref=${{ env.IMAGE_NAME }}:${{env.SERVICE_NAME}}-buildcache,mode=max
           tags: ${{ env.IMAGE_NAME }}:${{env.SERVICE_NAME}}-${{ steps.release.outputs.new_release_version }}
