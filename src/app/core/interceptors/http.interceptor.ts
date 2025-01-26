@@ -26,8 +26,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          this.popupHandler.openSnackbar('Success!', 'success');
-          return event.clone({ body: event.body?.result });
+          return event.clone({ body: event.body });
         }
         return event;
       }),
@@ -38,9 +37,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
         } else if (error.status === 403) {
           this.popupHandler.openSnackbar('Forbidden');
           this.router.navigate(['/auth/login']);
-        } else if (error.status === 400) {
-          this.popupHandler.openSnackbar(error.error.errorMessage);
-        } else if (error.status === 500) {
+        } else if (error.status === 400 || error.status === 500) {
           this.popupHandler.openSnackbar(error.error.message);
         } else {
           this.popupHandler.openSnackbar(
